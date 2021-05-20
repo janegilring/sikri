@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/alpine
 {
-	 "name": "sikri-dev",
+	"name": "sikri-management",
 	"build": {
 		"dockerfile": "Dockerfile",
 	},
@@ -19,11 +19,10 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "uname -a",
+    //"postCreateCommand": "uname -a",
 
-	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-	// "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+	"mounts": ["source=${localEnv:USERPROFILE}//.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached","source=c://git//sikri-repos,target=/home/vscode/git,type=bind,consistency=cached"]],
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	//"remoteUser": "vscode"
+	"remoteUser": "vscode"
 }
