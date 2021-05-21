@@ -27,7 +27,7 @@ RUN apt install -y git
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-RUN $ENV:TERRAFORM_VERSION="0.15.3";Invoke-Webrequest https://releases.hashicorp.com/terraform/$($ENV:TERRAFORM_VERSION)/terraform_$($ENV:TERRAFORM_VERSION)_linux_amd64.zip -OutFile /tmp/terraform.zip
+RUN $ENV:TERRAFORM_VERSION="0.15.4";Invoke-Webrequest https://releases.hashicorp.com/terraform/$($ENV:TERRAFORM_VERSION)/terraform_$($ENV:TERRAFORM_VERSION)_linux_amd64.zip -OutFile /tmp/terraform.zip
 
 RUN Expand-Archive /tmp/terraform.zip -DestinationPath /tmp/terraform
 
@@ -48,8 +48,11 @@ COPY ["powershell/requirements.psd1", "/tmp/requirements.psd1"]
 
 RUN Invoke-PSDepend /tmp/requirements.psd1 -Force
 
+RUN apt install -y sudo
+
 # Switch to non-root user:
 RUN useradd --create-home vscode
+RUN usermod -aG sudo vscode
 WORKDIR /home/vscode
 USER vscode
 
@@ -57,3 +60,5 @@ RUN git config --global core.autocrlf true
 RUN git config --global user.name "Jan Egil Ring"
 RUN git config --global user.email "jan.egil.ring@crayon.com"
 RUN git config --global color.ui true
+
+#RUN Enable-AzContextAutosave
