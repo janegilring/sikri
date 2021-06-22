@@ -17,5 +17,6 @@
     'Microsoft.PowerShell.UnixCompleters'   = 'latest'
     'Microsoft.PowerShell.ConsoleGuiTools'  = 'latest'
     'oh-my-posh'                            = 'latest'
+    'subnet'                                = 'latest'
     'tftools'                               = 'latest'
 }
