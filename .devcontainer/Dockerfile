@@ -13,7 +13,8 @@ RUN AZ_REPO=$(lsb_release -cs);echo "deb [arch=amd64] https://packages.microsoft
 
 RUN apt-get update && apt-get install azure-cli
 
-RUN apt install -y git
+#  Install the latest stable Git version: https://itsfoss.com/install-git-ubuntu/
+RUN apt install software-properties-common -y && add-apt-repository ppa:git-core/ppa -y && apt update && apt install git -y
 
 ################################
 # Install Terraform
