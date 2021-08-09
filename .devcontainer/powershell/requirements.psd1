@@ -12,6 +12,7 @@
     'Az.Storage'                            = '3.6.0'
     'Az.Resources'                          = '3.5.0'
     'Az.Functions'                          = '2.0.0'
+    'Az.ResourceGraph'                      = '0.11.0'
     'Microsoft.PowerShell.SecretManagement' = 'latest'
     'Microsoft.PowerShell.SecretStore'      = 'latest'
     'Microsoft.PowerShell.UnixCompleters'   = 'latest'
