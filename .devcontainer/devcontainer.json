@@ -21,7 +21,7 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
     //"postCreateCommand": "uname -a",
 
-	"mounts": ["source=${localEnv:USERPROFILE}//.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached","source=c://git//sikri-repos,target=/workspaces/repos,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.azure,target=/home/vscode/.azure,type=bind,consistency=cached"],
+	"mounts": ["source=${localEnv:USERPROFILE}//.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached","source=c://git//sikri-repos,target=/workspaces/repos,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.azure,target=/home/vscode/.azure,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/powershell,target=/home/vscode/.config/powershell,type=bind,consistency=cached"],
 	//  ,"source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.Azure(pwsh),target=/home/vscode/.Azure,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.IdentityService(pwsh),target=/home/vscode/.IdentityService,type=bind,consistency=cached"
 	// Leads to: Token acquisition failed for user c1-admin_jer@pragmaticecm.onmicrosoft.com. Ensure that you have authenticated with a developer tool that supports Azure single sign o
 

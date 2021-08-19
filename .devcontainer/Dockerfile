@@ -1,6 +1,6 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/alpine/.devcontainer/base.Dockerfile
 
-FROM mcr.microsoft.com/powershell:7.1.3-ubuntu-20.04-20210414
+FROM mcr.microsoft.com/powershell:7.1.4-ubuntu-20.04-20210812
 
 RUN apt-get update && apt-get -y upgrade
 
@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install azure-cli
 #  Install the latest stable Git version: https://itsfoss.com/install-git-ubuntu/
 RUN apt install software-properties-common -y && add-apt-repository ppa:git-core/ppa -y && apt update && apt install git -y
 
+# Install kubectl - https://github.com/lachie83/k8s-kubectl
+COPY --from=lachlanevenson/k8s-kubectl:v1.22.0 /usr/local/bin/kubectl /usr/local/bin/kubectl
+
 ################################
 # Install Terraform
 ################################
@@ -28,7 +31,7 @@ RUN apt install software-properties-common -y && add-apt-repository ppa:git-core
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-RUN $ENV:TERRAFORM_VERSION="0.15.4";Invoke-Webrequest https://releases.hashicorp.com/terraform/$($ENV:TERRAFORM_VERSION)/terraform_$($ENV:TERRAFORM_VERSION)_linux_amd64.zip -OutFile /tmp/terraform.zip
+RUN $ENV:TERRAFORM_VERSION="1.0.5";Invoke-Webrequest https://releases.hashicorp.com/terraform/$($ENV:TERRAFORM_VERSION)/terraform_$($ENV:TERRAFORM_VERSION)_linux_amd64.zip -OutFile /tmp/terraform.zip
 
 RUN Expand-Archive /tmp/terraform.zip -DestinationPath /tmp/terraform
 
@@ -49,11 +52,8 @@ COPY ["powershell/requirements.psd1", "/tmp/requirements.psd1"]
 
 RUN Invoke-PSDepend /tmp/requirements.psd1 -Force
 
-RUN apt install -y sudo
-
 # Switch to non-root user:
 RUN useradd --create-home vscode
-RUN usermod -aG sudo vscode
 WORKDIR /home/vscode
 USER vscode
 
@@ -62,4 +62,5 @@ RUN git config --global user.name "Jan Egil Ring"
 RUN git config --global user.email "jan.egil.ring@crayon.com"
 RUN git config --global color.ui true
 
-#RUN Enable-AzContextAutosave
+RUN Install-Module -Name oh-my-posh -Force
+RUN Install-Module -Name PSReadLine -Force -AllowPreRelease
