@@ -1,6 +1,6 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/alpine/.devcontainer/base.Dockerfile
 
-FROM mcr.microsoft.com/powershell:7.1.4-ubuntu-20.04-20210812
+FROM mcr.microsoft.com/powershell:7.2.0-ubuntu-focal
 
 RUN apt-get update && apt-get -y upgrade
 
