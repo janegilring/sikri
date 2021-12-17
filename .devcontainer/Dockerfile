@@ -1,17 +1,31 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/alpine/.devcontainer/base.Dockerfile
 
-FROM mcr.microsoft.com/powershell:7.2.0-ubuntu-focal
+FROM mcr.microsoft.com/powershell:7.2.1-ubuntu-focal
 
 RUN apt-get update && apt-get -y upgrade
 
+RUN apt-get update && apt-get install -y \
+    wget \
+    unzip \
+    ca-certificates \
+    apt-transport-https \
+    lsb-release \
+    gnupg \
+	curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
-RUN apt-get install ca-certificates curl apt-transport-https lsb-release gnupg -y
 
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
 
 RUN AZ_REPO=$(lsb_release -cs);echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
 
 RUN apt-get update && apt-get install azure-cli
+
+# Prerequisite for .NET Interactive Notebooks: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode
+# https://docs.microsoft.com/en-gb/dotnet/core/install/linux-ubuntu#2004-
+RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
+RUN apt-get update && apt-get install -y dotnet-sdk-6.0
 
 #  Install the latest stable Git version: https://itsfoss.com/install-git-ubuntu/
 RUN apt install software-properties-common -y && add-apt-repository ppa:git-core/ppa -y && apt update && apt install git -y
