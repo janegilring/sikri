@@ -1,0 +1,90 @@
+$profile
+gc $profile
+. /workspaces/sikri/.devcontainer/powershell/profile.ps1
+Connect-AzAccount -UseDeviceAuthentication
+Set-AzContext "Sikri Elements Dev"
+Get-AzVm
+pwd
+cd /sikri-data
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform
+ls
+dir
+touch tets
+ls
+rm ./tets
+ls
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform
+cd /sikri-data
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform
+ssh
+gcm ssh
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+Connect-AzAccount -UseDeviceAuthentication
+az login --use-device
+Set-AzContext "Sikri Core Dev"`
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+$output = terraform show -json | ConvertFrom-Json
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+$output = terraform show -json | ConvertFrom-Json
+$output = terraform show -json | ConvertFrom-Json -Depth 3
+$output = terraform show -json | ConvertFrom-Json -NoEnumerate
+$output = terraform show -json
+terraform show
+terraform show -json
+terraform plan
+terraform show -json
+terraform plan
+terraform state list
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.kubernetes*" }
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.kubernetes*" } |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" } |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" } |`
+Foreach-Object {terraform --% state rm $PSItem}
+terraform plan
+terraform apply
+az account set --subscription cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e
+az aks get-credentials --resource-group sikri-elements-02-dev-rg --name elements-02-dev-k8s
+kubectl
+curl -LO https://dl.k8s.io/release/v1.23.0/bin/linux/arm64/kubectl
+ls
+./kubectl get nodes
+chmod +x .´kubectl
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.kubernetes*" } |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" } |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list
+terraform apply
+terraform plan
+terraform apply --target=azuredevops_serviceendpoint_kubernetes.aks_default_projects
+terraform init
+terraform apply --target=azuredevops_serviceendpoint_kubernetes.aks_default_projects
+terraform state list
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_default_projects
+terraform state list
+terraform apply
+terraform plan
+terraform state list
+terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_backend_projects
+terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_default_elements_cloud_aks`
+terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_default_projects`
+terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_monitoring_projects`
+terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_utility_projects
+terraform apply
+Install-Module VSTeam
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName Projects -id d8194df1-7fe1-4c42-9768-55931d566ff2
+Get-VSTeamServiceEndpoint -ProjectName Projects -id d8194df1-7fe1-4c42-9768-55931d566ff2 | fl *
+kubectl get AzureIngressProhibitedTargets --all-namespaces
+ls
+./kubectl get service --namespace backend
+./kubectl get service --namespace istio-system

@@ -1,6 +1,6 @@
 @{
     PSDependOptions                         = @{
-        Target     = 'AllUsers'
+        Target     = 'CurrentUser'
         Parameters = @{
             Repository      = 'PSGallery'
             AllowPrerelease = $false

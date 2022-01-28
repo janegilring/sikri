@@ -4,7 +4,7 @@
 			"path": ".."
 		},
 		{
-			"path": "../../repos"
+			"path": "../../../sikri-data"
 		}
 	],
 	"settings": {}

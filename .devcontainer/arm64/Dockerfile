@@ -37,8 +37,6 @@ RUN useradd --create-home vscode
 RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v7.5.1/posh-linux-arm64 -O /usr/local/bin/oh-my-posh
 RUN chmod +x /usr/local/bin/oh-my-posh
 
-RUN apt-get update;apt-get install openssh-client -y
-
 # Switch to non-root user:
 WORKDIR /home/vscode
 USER vscode
@@ -46,7 +44,7 @@ USER vscode
 SHELL ["pwsh","-NoProfile", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN mkdir /home/vscode/.config;mkdir /home/vscode/.config/powershell
-RUN Set-Content -Path /home/vscode/.config/powershell/Microsoft.VSCode_profile.ps1 -Value ". /workspaces/sikri/.devcontainer/powershell/profile.ps1"
+RUN Set-Content -Path /home/vscode/.config/powershell/Microsoft.VSCode_profile.ps1 -Value ". /workspaces/tine/.devcontainer/powershell/profile.ps1"
 RUN Install-Module -Name PSReadLine -Force -AllowPreRelease
 
 RUN Install-Module PSDepend -Force

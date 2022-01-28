@@ -1,0 +1,30 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/alpine
+{
+	"name": "sikri-management",
+	"build": {
+		"dockerfile": "Dockerfile",
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.shell.linux": "/opt/microsoft/powershell/7/pwsh"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	// Note that some extensions may not work in Alpine Linux. See https://aka.ms/vscode-remote/linux.
+	"extensions": ["ms-vscode.powershell","ms-vscode.azure-account","ms-dotnettools.dotnet-interactive-vscode","hashicorp.terraform","takumii.markdowntable"],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+    //"postCreateCommand": "uname -a",
+
+	"mounts": ["source=${localEnv:USERPROFILE}//.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached","source=c://git//sikri-repos,target=/workspaces/repos,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.azure,target=/home/vscode/.azure,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/powershell,target=/home/vscode/.config/powershell,type=bind,consistency=cached"],
+	//  ,"source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.Azure(pwsh),target=/home/vscode/.Azure,type=bind,consistency=cached","source=${localEnv:USERPROFILE}//OneDrive//Kunder//Sikri//devcontainer/.IdentityService(pwsh),target=/home/vscode/.IdentityService,type=bind,consistency=cached"
+	// Leads to: Token acquisition failed for user c1-admin_jer@pragmaticecm.onmicrosoft.com. Ensure that you have authenticated with a developer tool that supports Azure single sign o
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
