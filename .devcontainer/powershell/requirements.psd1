@@ -21,6 +21,7 @@
     'Az.Network'                            = '4.13.0'
     'Az.Monitor'                            = '3.0.0'
     'Az.Support'                            = '1.0.0'
+    'Az.Sql'                                = '3.7.2'
     'Microsoft.PowerShell.SecretManagement' = 'latest'
     'Microsoft.PowerShell.SecretStore'      = 'latest'
     'Microsoft.PowerShell.UnixCompleters'   = 'latest'

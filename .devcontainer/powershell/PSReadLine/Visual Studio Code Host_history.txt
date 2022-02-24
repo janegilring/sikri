@@ -88,3 +88,266 @@ kubectl get AzureIngressProhibitedTargets --all-namespaces
 ls
 ./kubectl get service --namespace backend
 ./kubectl get service --namespace istio-system
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$output = terraform show -json | ConvertFrom-Json
+$output.values.root_module.child_modules.resources| Where-Object address -like "module.sikri-terraform-elements-instance.kubernetes*" | Select-Object -ExpandProperty address |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.kubernetes*" }
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" }
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" } |`
+Foreach-Object {terraform state rm $PSItem}
+terraform destroy
+cls
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-seltest
+terraform init
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-seltest-rg.terraform.tfstate" --upgrade
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Get-AzVm
+Connect-AzAccount -UseDeviceAuthentication
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-seltest-rg.terraform.tfstate" --upgrade
+terraform apply
+az login --use-device
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2"
+terraform apply
+az account show
+az context clear
+az clear context
+az logogg
+az logoff
+az logout
+az login --use-device
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2"
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-seltest-rg.terraform.tfstate" --upgrade
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-seltest-rg.terraform.tfstate" --upgrade
+terraform apply
+az vm list
+az vm list -o table
+h
+kubectl
+/sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-seltest
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-seltest
+Connect-AzAccount -UseDeviceAuthentication
+az login --use-device
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2"
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-seltest-rg.terraform.tfstate" 
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-seltest-rg.terraform.tfstate"
+terraform apply
+terraform version
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-integration/prod/virtual_machines/vm_intelements05.tf
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-integration/prod/virtual_machines
+terraform init
+terraform plan
+Get-AzSubscription
+terraform plan
+if ($owner.UserPrincipalName -eq $Null) {
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+az vm identity assign -g sikri-elements-int-rg -n intelements05
+az vm extension set  --publisher Microsoft.Azure.ActiveDirectory --name AADLoginForWindows --resource-group sikri-elements-int-rg --vm-name intelements05
+cd  /sikri-data/sikri-terraform/configurations/sikri-admin
+terraform apply --target=azuredevops_serviceendpoint_kubernetes.aks_default_projects
+pwd
+cd ..
+pwd
+cd ..
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-elements-instance
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/test01
+Set-AzContext "Sikri Core"
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_sikri-elements-01-test-rg.terraform.tfstate" --upgrade
+terraform plan
+terraform state list
+terraform state rm module.sikri-terraform-elements-instance.azurerm_nat_gateway.shared
+terraform state rm module.sikri-terraform-elements-instance.azurerm_subnet_nat_gateway_association.akssubnet
+terraform state rm module.sikri-terraform-elements-instance.azurerm_subnet_nat_gateway_association.vmsubnet
+terraform plan
+terraform import module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster.cluster /subscriptions/32927346-9e0b-4d03-ab1a-7b6636e377dd/resourceGroups/sikri-elements-01-test-rg/providers/Microsoft.ContainerService/managedClusters/elements-01-test-k8s
+terraform state list
+terraform --% import module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[\"win\"] /subscriptions/32927346-9e0b-4d03-ab1a-7b6636e377dd/resourceGroups/sikri-elements-01-test-rg/providers/Microsoft.ContainerService/managedClusters/elements-01-test-k8s
+terraform --% import module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[\"win\"] /subscriptions/32927346-9e0b-4d03-ab1a-7b6636e377dd/resourceGroups/sikri-elements-01-test-rg/providers/Microsoft.ContainerService/managedClusters/elements-01-test-k8s/agentPools/win
+terraform --% import module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[\"linux\"] /subscriptions/32927346-9e0b-4d03-ab1a-7b6636e377dd/resourceGroups/sikri-elements-01-test-rg/providers/Microsoft.ContainerService/managedClusters/elements-01-test-k8s/agentPools/linux
+terraform plan
+pwd
+ls
+cd /sikri-data
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-elements-shared
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-shared/dev
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate"
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate" -upgrade
+terraform plan
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate" -upgrade
+terraform plan
+terraform apply --target=module.sikri-terraform-elements-shared.azurerm_data_protection_backup_vault.vault
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-shared/prod
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+Set-AzContext -Subscription 'Sikri Core'
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_sikri-elements-shared-rg.terraform.tfstate" -upgrade
+terraform plan
+terraform apply --target=module.sikri-terraform-elements-shared.azurerm_data_protection_backup_vault.vault
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_sikri-elements-shared-rg.terraform.tfstate" -upgrade
+terraform apply --target=module.sikri-terraform-elements-shared.azurerm_data_protection_backup_policy_postgresql.elements
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_sikri-elements-shared-rg.terraform.tfstate" -upgrade
+terraform apply --target=module.sikri-terraform-elements-shared.azurerm_data_protection_backup_policy_postgresql.elements
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-shared/dev
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-shared-dev-rg.terraform.tfstate"
+terraform apply --target=module.sikri-terraform-elements-shared.azurerm_data_protection_backup_policy_postgresql.elements
+Get-AzDisk
+Set-AzContext "Sikri Elements Dev"
+Get-AzDisk
+Get-AzDisk | select -first 1
+Get-AzDisk | select -first 1 | fl *
+Get-AzSubscription
+Get-AzSubscription | where name -like "Sikri*"
+Get-AzSubscription | where name -like "Sikri*" | ForEach-Object {`
+`
+    Set-AzContext -SubscriptionObject $PSItem`
+`
+`
+}
+Start-AzPolicyComplianceScan
+Install-Module Az.PolicyInsights
+Get-AzSubscription | where name -like "Sikri*" | ForEach-Object {`
+`
+    Set-AzContext -SubscriptionObject $PSItem`
+`
+    Start-AzPolicyComplianceScan`
+`
+}
+Get-AzSubscription | where name -like "Sikri*" | ForEach-Object {`
+`
+    Set-AzContext -SubscriptionObject $PSItem`
+`
+    Get-AzStorageAccount | Set-AzStorageAccount -MinimumTlsVersion TLS1_2`
+`
+}
+Get-AzSubscription | where name -like "Sikri*" | ForEach-Object {`
+`
+    Set-AzContext -SubscriptionObject $PSItem`
+`
+    Start-AzPolicyComplianceScan`
+`
+}
+Set-AzContext "Sikri Elements Dev"
+Connect-AzAccount -UseDeviceAuthentication
+Set-AzContext "Sikri Elements Dev"
+Get-AzSqlServer
+Install-Module Az.Sql
+Get-AzSqlServer
+gmo
+Install-Module Az.PostgreSql
+Get-AzPostgreSqlServer
+gmo
+Get-AzSqlServer
+Get-AzSqlServer | Where-Object PublicNetworkAccess
+$SqlServer = Get-AzSqlServer
+$SqlServer = Get-AzSqlServer`
+`
+`
+    foreach ($SqlServer in $SqlServers) {`
+`
+        if ($SqlServer.PublicNetworkAccess -eq "Enabled") {`
+`
+            Write-Output "Public access is enabled for SQL Server $($SqlServer.Name) - disabling"`
+`
+`
+        } else {`
+`
+            Write-Output "Public access is disabled for SQL Server $($SqlServer.Name) - no action"`
+`
+        }`
+`
+    }
+$SqlServer
+$SqlServers = Get-AzSqlServer`
+`
+`
+    foreach ($SqlServer in $SqlServers) {`
+`
+        if ($SqlServer.PublicNetworkAccess -eq "Enabled") {`
+`
+            Write-Output "Public access is enabled for SQL Server $($SqlServer.Name) - disabling"`
+`
+`
+        } else {`
+`
+            Write-Output "Public access is disabled for SQL Server $($SqlServer.Name) - no action"`
+`
+        }`
+`
+    }
+$SqlServers
+Write-Output "Public access is enabled for SQL Server $($SqlServer.ServerName) - disabling"
+Get-AzPostgreSqlServer
+gmo
+Get-AzPostgreSqlServer
+Get-AzPostgreSqlServer | fl
+$PostgreSqlServers = Get-AzPostgreSqlServer`
+`
+    foreach ($PostgreSqlServer in $PostgreSqlServers) {`
+`
+        if ($PostgreSqlServer.PublicNetworkAccess -eq "Enabled") {`
+`
+            Write-Output "Public access is enabled for SQL Server $($PostgreSqlServer.ServerName) - disabling"`
+`
+`
+        } else {`
+`
+            Write-Output "Public access is disabled for SQL Server $($PostgreSqlServer.ServerName) - no action"`
+`
+        }`
+`
+    }
+Get-AzPostgreSqlServer | fl
+Write-Output "Public access is disabled for PostgreSQL Server $($PostgreSqlServer.Name) - no action"
+cls
+gcm *postgre*
+$PostgreSqlServer | Get-AzPostgreSqlConfiguration
+Get-AzPostgreSqlConfiguration
+$PostgreSqlServer
+$PostgreSqlServer.PublicNetworkAccess 
+$PostgreSqlServer.PublicNetworkAccess
+$PostgreSqlServer.PublicNetworkAccess="Disabled"
+$PostgreSqlServer.PublicNetworkAccess
+$PostgreSqlServer | Update-AzPostgreSqlServer
+$PostgreSqlServer.PublicNetworkAccess
+$PostgreSqlServers = Get-AzPostgreSqlServer
+$PostgreSqlServers.PublicNetworkAccess
+gmo
+$PostgreSqlServer | Update-AzPostgreSqlServer -PublicNetworkAccess Disabled
+gcm *AzSqlServer*
+$SqlServer
+$SqlServer | Set-AzSqlServer -PublicNetworkAccess Disabled
+get-subnet
+Get-Subnet 51.120.0.0/16
+New-AzPolicyDefinition -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json -ManagementGroupName IT
+New-AzPolicyDefinition -Name deploy-redis-diagnostics-settings-to-la -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json -ManagementGroupName IT
+New-AzPolicyDefinition -Name deploy-redis-diagnostics-settings-to-la -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json
+New-AzPolicyDefinition -Name Deploy-Diagnostics-RedisCache -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json -ManagementGroupName IT
+New-AzPolicyDefinition -Name Deploy-Diagnostics-RedisCache -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json
+Set-AzContext "Sikri Elements"
+New-AzPolicyDefinition -Name Deploy-Diagnostics-RedisCache -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json
+$SqlServers
