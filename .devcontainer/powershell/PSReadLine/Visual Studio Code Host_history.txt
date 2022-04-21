@@ -351,3 +351,149 @@ New-AzPolicyDefinition -Name Deploy-Diagnostics-RedisCache -DisplayName 'Deploy 
 Set-AzContext "Sikri Elements"
 New-AzPolicyDefinition -Name Deploy-Diagnostics-RedisCache -DisplayName 'Deploy Diagnostic Settings for Redis Cache to Log Analytics workspace' -Policy /sikri-data/redis-diag-policy.json
 $SqlServers
+ls
+cd /sikri-data/
+ls¨
+ls
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-elements-instance
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+touch install.sh
+ls
+Set-AzContext "Sikri Core Dev"
+Get-AzVmssVM -VMScaleSetName sikri-azure-devops-linux-dev-vmss -ResourceGroupName "sikri-infrastructure-dev-rg" |`
+Invoke-AzVmssVMRunCommand -CommandId RunShellScript -ScriptPath ./install.sh
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform init
+terraform validate
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-v22-1/main.tf
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-v22-1
+Set-AzContext "Sikri Core"
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-v22-1-rg.terraform.tfstate" --upgrade
+terraform apply
+cd /sikri-data
+pwd
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-ecm-instance
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-v22-1
+terraform apply
+e
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-v22-1-rg.terraform.tfstate" --upgrade
+version = "2..0"
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-v22-1-rg.terraform.tfstate" --upgrade
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-v22-1-rg.terraform.tfstate" --upgrade
+terraform apply
+az account set --subscription cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e
+az extension add --name ssh
+az network bastion tunnel --name elements-dev-bastion-host --resource-group sikri-elements-shared-dev-rg --target-resource-id /subscriptions/cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e/resourceGroups/sikri-elements-elk-dev-rg/providers/Microsoft.Compute/virtualMachines/dev-kibana --resource-port 22 --port 222
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform apply
+terraform init
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+Set-AzContext "Sikri Core"
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform init
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform apply
+terraform version
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform apply
+Get-AzVmImage -Location norwayeast -Offer WindowsServer
+Get-AzVmImage -Location norwayeast
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2022-datacenter-g2
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2022-datacenter
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2022-datacenter-g2-core
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2022-datacenter-core
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2022-datacenter-core-g2
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform apply
+terraform init -upgrade
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform init -upgrade
+terraform apply
+cls
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2019-datacenter-core-g2
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform apply
+terraform plan
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform plan
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-integration/prod/virtual_machines
+terraform init
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+terraform init
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform init
+terraform apply
+terraform init
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform init
+terraform init -upgrade
+terraform plan
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/prod
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform init -upgrade
+terraform plan
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/shared
+terraform version
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/shared
+Set-AzContext "Sikri Core"
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform validate
+terraform plan
+terraform --% apply --target=module.sikri-terraform-ecm-shared.module.virtual_machines[\"ecmoonline01\"].azurerm_windows_virtual_machine.machine[0]
+terraform --% apply --target=module.sikri-terraform-ecm-shared.module.virtual_machines[\"ecmoonline01\"].azurerm_virtual_machine_extension.adjoin[\"ADDS\"]
+terraform plan
+cd /sikri-data
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-ecm-shared
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/shared
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate" -upgrade
+terraform plan
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform plan
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform plan

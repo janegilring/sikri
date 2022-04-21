@@ -33,7 +33,7 @@
 		"azure-cli": "latest",
 		"github-cli": "latest",
 		"kubectl": "latest",
-		"terraform": "1.1.3"
+		"terraform": "latest"
 	}
 
 }
