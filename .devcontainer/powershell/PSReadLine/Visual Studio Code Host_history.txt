@@ -497,3 +497,375 @@ terraform init  -backend-config "storage_account_name=sikriterraform" -backend-c
 terraform plan
 terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
 terraform plan
+Set-AzContext "Sikri Elements Dev"
+gcm *privatelink*
+gcm *privateendpoint*
+Get-AzPrivateEndpoint
+Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName = 'sikri-elements-01-dev-rg'
+ $ResourceGroupName = 'sikri-elements-01-dev-rg'
+$ResourceGroupName = 'sikri-elements-01-dev-rg'
+Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName
+Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName | select -first 1
+$a = Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName | select -first 1
+$a
+$a.PrivateLinkServiceConnections
+$a.PrivateLinkServiceConnections.PrivateLinkServiceId
+$a = Get-AzSqlServer -ResourceGroupName $ResourceGroupName | select -first 1
+$a
+$SqlServer = Get-AzSqlServer -ResourceGroupName $ResourceGroupName | select -first 1
+$SqlServer.Id
+$SqlServer.ResourceId
+    Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName | Where-Object {$PSItem.PrivateLinkServiceConnections.PrivateLinkServiceId -eq $SqlServer.ResourceId}
+Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName | Where-Object {$PSItem.PrivateLinkServiceConnections.PrivateLinkServiceId -eq $SqlServer.ResourceId}
+$sqlResourceForPrivateLink = (Get-AzPrivateEndpoint -ResourceGroupName $ResourceGroupName | Where-Object {$PSItem.PrivateLinkServiceConnections.PrivateLinkServiceId -eq $SqlServer.ResourceId}).Id
+$sqlResourceForPrivateLink
+$BackupStorageAccountName = 'elementsdevbackup'
+$BackupStorageAccountId = Get-AzStorageAccount | Where-Object Name -eq $BackupStorageAccountName
+$BackupStorageAccountId 
+$BackupStorageAccountId
+$BackupStorageAccountId = Get-AzStorageAccount | Where-Object StorageAccountName -eq $BackupStorageAccountName
+$BackupStorageAccountId 
+$BackupStorageAccountId
+(Get-AzStorageAccount | Where-Object StorageAccountName -eq $BackupStorageAccountName).Id
+    $sqlPrivate_Endpoint_Connection_Resource = Get-AzPrivateEndpointConnection -PrivateLinkResourceId $SqlServer.ResourceId | ``
+        Where-Object { ($_.PrivateEndpoint.Id -like "*ImportExportPrivateLink_SQL*" -and $_.PrivateLinkServiceConnectionState.status -eq "Pending") }
+$sqlPrivate_Endpoint_Connection_Resource = Get-AzPrivateEndpointConnection -PrivateLinkResourceId $SqlServer.ResourceId | ``
+        Where-Object { ($_.PrivateEndpoint.Id -like "*ImportExportPrivateLink_SQL*" -and $_.PrivateLinkServiceConnectionState.status -eq "Pending") }
+$sqlPrivate_Endpoint_Connection_Resource
+$sqlPrivate_Endpoint_Connection_Resource.count
+$sqlPrivate_Endpoint_Connection_Resource.Name
+$SqlServers = @()
+Get-AzSqlServer -ResourceGroupName $ResourceGroupName -PipelineVariable SqlServer | Get-AzSqlDatabase | Where-Object DatabaseName -NE 'master' | ForEach-Object {`
+`
+    $SqlServers += $SqlServer}
+$SqlServers
+$SqlServers.ResourceId
+$SqlServers.ResourceId | Sort-Object -Unique
+$storagePrivate_Endpoint_Connection_Resource = Get-AzPrivateEndpointConnection -PrivateLinkResourceId $BackupStorageAccountId | ``
+    Where-Object { ($_.PrivateEndpoint.Id -like "*ImportExportPrivateLink_Storage*" -and $_.PrivateLinkServiceConnectionState.status -eq "Pending") }
+ $BackupStorageAccountId
+$BackupStorageAccountId
+$BackupStorageAccountId = (Get-AzStorageAccount | Where-Object StorageAccountName -EQ $BackupStorageAccountName).Id
+$BackupStorageAccountId 
+$BackupStorageAccountId
+$storagePrivate_Endpoint_Connection_Resource = Get-AzPrivateEndpointConnection -PrivateLinkResourceId $BackupStorageAccountId | ``
+    Where-Object { ($_.PrivateEndpoint.Id -like "*ImportExportPrivateLink_Storage*" -and $_.PrivateLinkServiceConnectionState.status -eq "Pending") }
+$storagePrivate_Endpoint_Connection_Resource 
+$storagePrivate_Endpoint_Connection_Resource
+if ($storagePrivate_Endpoint_Connection_Resource) {`
+`
+    $storagePrivate_Endpoint_Connection_Resource | ForEach-Object {`
+`
+        Write-Host "Approving AzPrivateEndpointConnection for $($PSItem.Id)"`
+`
+        Approve-AzPrivateEndpointConnection -ResourceId $PSItem.Id`
+`
+    }`
+}
+$SqlServerResourceIds = $SqlServers.ResourceId | Sort-Object -Unique
+foreach ($SqlServerResourceId in $SqlServerResourceIds) {`
+`
+    $sqlPrivate_Endpoint_Connection_Resource = Get-AzPrivateEndpointConnection -PrivateLinkResourceId $SqlServerResourceId | ``
+        Where-Object { ($_.PrivateEndpoint.Id -like "*ImportExportPrivateLink_SQL*" -and $_.PrivateLinkServiceConnectionState.status -eq "Pending") }`
+`
+    if ($sqlPrivate_Endpoint_Connection_Resource) {`
+`
+        $sqlPrivate_Endpoint_Connection_Resource | ForEach-Object {`
+`
+            Write-Host "Approving AzPrivateEndpointConnection for $($PSItem.Id)"`
+`
+            $null = Approve-AzPrivateEndpointConnection -ResourceId $PSItem.Id`
+`
+        }`
+`
+    }`
+`
+}
+$BackupStorageAccountName = 'elementsdevbackup'
+$BackupStorageAccountId = (Get-AzStorageAccount | Where-Object StorageAccountName -EQ $BackupStorageAccountName).Id
+gcm *exportstatus*
+Get-AzSqlDatabaseImportExportStatus -OperationStatusLink $Url
+$Url = "https://management.azure.com/subscriptions/32927346-9e0b-4d03-ab1a-7b6636e377dd/providers/Microsoft.Sql/locations/norwayeast/importExportOperationResults/b042b3e4-122e-4435-9369-3f6130e93ccf-elements-01-sql?api-version=2021-05-01-preview"
+Get-AzSqlDatabaseImportExportStatus -OperationStatusLink $Url
+Get-AzSqlDatabaseImportExportStatus -OperationStatusLink $Url | Select-Object -ExpandProperty PrivateEndpointRequestStatus
+Get-AzSqlDatabaseImportExportStatus -OperationStatusLink $Url | fl *
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/shared
+Set-AzContext "Sikri Core"`
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM`
+`
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform plan
+Connect-AzAccount -UseDeviceAuthentication
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform plan
+az login --use-device
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+terraform plan
+cd /sikri-data
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-elements-instance
+git clone git@ssh.dev.azure.com:v3/elements/Elements%20Cloud%20AKS/sikri-terraform-azurerm-kubernetes
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/shared
+Set-AzContext "Sikri Core"
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate" -upgrade
+terraform plan
+az policy set-definition show --name 4fde793ce96b4d408f74c09d
+az policy set-definition show --name help
+az policy set-definition show --help
+Get-AzPolicyDefinition
+Get-AzPolicyDefinition -Name 4fde793ce96b4d408f74c09d
+Get-AzPolicyDefinition -Name "SikriExceptions - Kubernetes cluster pod security restricted standards for Linux-based workloads"
+Get-AzPolicyDefinition | where id -eq 4fde793ce96b4d408f74c09d
+Get-AzPolicyDefinition | where Name -eq 4fde793ce96b4d408f74c09d
+Get-AzContext
+Set-AzContext "Sikri Elements Dev"
+Get-AzPolicyDefinition | where Name -eq 4fde793ce96b4d408f74c09d
+Get-AzPolicyDefinition | where PolicyDefintionId -eq "/providers/Microsoft.Management/managementGroups/43aa55eb-d8aa-4cc5-a52c-edb885cfe539/providers/Microsoft.Authorization/policySetDefinitions/4fde793ce96b4d408f74c09d"
+Get-AzPolicyDefinition | where PolicyDefinitionId -eq "/providers/Microsoft.Management/managementGroups/43aa55eb-d8aa-4cc5-a52c-edb885cfe539/providers/Microsoft.Authorization/policySetDefinitions/4fde793ce96b4d408f74c09d"
+Get-AzPolicyDefinition | where PolicyDefinitionId -eq "/providers/Microsoft.Management/managementGroups/43aa55eb-d8aa-4cc5-a52c-edb885cfe539/providers/Microsoft.Authorization/policyDefinitions/4a386b8e-0dd1-46de-9aad-3a9cee60e0d3"
+Get-AzPolicySetDefinition
+Get-AzPolicySetDefinition | where PolicyDefinitionId -eq "/providers/Microsoft.Management/managementGroups/43aa55eb-d8aa-4cc5-a52c-edb885cfe539/providers/Microsoft.Authorization/policySetDefinitions/4fde793ce96b4d408f74c09d"
+Get-AzPolicySetDefinition | where PolicySetDefinitionId -eq "/providers/Microsoft.Management/managementGroups/43aa55eb-d8aa-4cc5-a52c-edb885cfe539/providers/Microsoft.Authorization/policySetDefinitions/4fde793ce96b4d408f74c09d"
+az policy set-definition show 
+az policy set-definition show
+az policy set-definition show --name "SikriExceptions - Kubernetes cluster pod security restricted standards for Linux-based workloads"
+Find-Module -Name Az.Accounts
+Find-Module -Name Az.Storage
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$output = terraform show -json | ConvertFrom-Json
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+$output = terraform show -json | ConvertFrom-Json
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+$output = terraform show -json | ConvertFrom-Json
+$output.values.root_module.child_modules.resources| Where-Object address -like "module.sikri-terraform-elements-instance.kubernetes*" | Select-Object -ExpandProperty address |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.kubernetes*" } |`
+Foreach-Object {terraform state rm $PSItem}
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" } |`
+Foreach-Object {terraform state rm $PSItem}
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-virtual-desktop/sikri-ecm
+az logout
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+az logout
+az login --use-device
+az account set -s "10a887a5-f9b7-4d8c-86a5-91cf79b81318" # Sikri ECM in Sikri ECM test tenant
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-avd-rg.terraform.tfstate" --upgrade
+terraform plan
+terraform import azurerm_availability_set.avd /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.Compute/availabilitySets/avd-avset
+terraform import azurerm_resource_group.rg /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg
+terraform --% import module.virtual_machines[/"ecmavd01/"].azurerm_windows_virtual_machine.machine[0] /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.Compute/virtualMachines/ecmavd01
+terraform --% import module.virtual_machines[\"ecmavd01\"].azurerm_windows_virtual_machine.machine[0] /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.Compute/virtualMachines/ecmavd01
+terraform --% module.virtual_machines[\"ecmavd01\"].azurerm_network_interface.machine[\"VmSubnet\"] /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.Network/networkInterfaces/nic-ecmavd01-VmSubnet
+terraform --% import module.virtual_machines[\"ecmavd01\"].azurerm_network_interface.machine[\"VmSubnet\"] /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.Network/networkInterfaces/nic-ecmavd01-VmSubnet
+terraform --% import azurerm_virtual_desktop_host_pool.pool_01 /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.DesktopVirtualization/hostpools/sikri-ecm-avd-pool-01
+terraform --% import azurerm_virtual_desktop_host_pool.pool_01 /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.DesktopVirtualization/HostPools/sikri-ecm-avd-pool-01
+terraform --% import azurerm_virtual_desktop_host_pool.pool_01 /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.DesktopVirtualization/hostPools/sikri-ecm-avd-pool-01
+terraform --% import azurerm_virtual_desktop_application_group.avd_app_group_01 /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.DesktopVirtualization/applicationgroups/Desktop
+terraform --% import azurerm_virtual_desktop_application_group.avd_app_group_01 /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.DesktopVirtualization/applicationGroups/Desktop
+terraform --% import azurerm_virtual_desktop_application_group.avd_app_group_02 /subscriptions/10a887a5-f9b7-4d8c-86a5-91cf79b81318/resourceGroups/sikri-ecm-avd-rg/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApps
+terraform plan
+terraform refresh
+terraform apply --target=azurerm_virtual_desktop_host_pool.pool_01.
+terraform apply --target=azurerm_virtual_desktop_host_pool.pool_01
+terraform plan
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-avd-rg.terraform.tfstate" --upgrade
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-virtual-desktop/sikri-ecm-pool-02
+$env:ARM_ACCESS_KEY = "7KW7HHG0LuXZobspwPQuJjzcZISV2hDDEbgoz+f0k1hRjmQQ1m48hQAp/vrrZdHcOXRpY5wkg+aVFaKxFQWrBA=="
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-avd-rg.terraform.tfstate" --upgrade
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-virtual-desktop/sikri-ecm-pool-02
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-avd-02-rg.terraform.tfstate" --upgrade
+terraform plan
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-avd-02-rg.terraform.tfstate" --upgrade
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-virtual-desktop/sikri-ecm-pool-01
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-avd-rg.terraform.tfstate" --upgrade
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-virtual-desktop/sikri-ecm-pool-02
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-virtual-desktop/sikri-elements-pool-02
+Set-AzContext "Sikri Core"
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Connect-AzAccount -UseDeviceAuthentication
+t
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_sikri-elements-ops-avd-rg.terraform.tfstate" --upgrade
+terraform apply
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+terraform apply
+az login --use-device
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd" # Sikri Elements
+terraform apply
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_sikri-elements-ops-avd-rg.terraform.tfstate" --upgrade
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-ai/dev
+Set-AzContext "Sikri Core"
+az account set -s "ca5cb6f1-6cf8-4473-95db-94e4b7757a32" # Sikri AI Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ai_dev_sikri-ml-dev-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ai_dev_sikri-ml-dev-rg.terraform.tfstate"
+terraform plan
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_web_application_firewall_policy.agw
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_application_gateway.ml
+terraform plan
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_api_management.ai[0]
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ai_dev_sikri-ml-dev-rg.terraform.tfstate"
+terraform plan
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ai_dev_sikri-ml-dev-rg.terraform.tfstate"
+terraform plan
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_private_dns_zone.privatelink_azure_api_net
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_private_dns_zone_virtual_network_link.vnet_privatelink_azure_api_net
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_private_endpoint.api_management[0]
+terraform apply --target=module.sikri-terraform-machine-learning-instance.azurerm_private_dns_a_record.api_management[0]
+Get-AzContext
+    Install-Module -Name Microsoft.Graph.Authentication
+    Install-Module -Name Microsoft.Graph.Applications
+    Install-Module -Name Microsoft.Graph.Reports
+    Install-Module -Name Microsoft.Graph.Users
+Import-Module -Name ImportExcel
+Install-Module -Name ImportExcel
+Connect-Graph -TenantId b716bd50-85d2-417b-8540-2a4d8d97f738 -Scopes "Application.Read.All", "AuditLog.Read.All", "Directory.Read.All", "Reports.Read.All", "User.Read.All" -ForceRefresh -ContextScope Process
+Select-MgProfile beta # Beta needed to get more information from the Graph, specifically Get-MgReportApplicationSign in this script
+$Applications = Get-MgApplication -All
+$Report = [System.Collections.Generic.List[Object]]::new()
+$Report = [System.Collections.Generic.List[Object]]::new()
+$Report | Sort-Object DisplayName | Export-Excel -Path $XlsxPath -WorksheetName Applications -TableName Applications -TableStyle Light2 -AutoSize
+$XlsxPath = "/workspaces/sikri/AzureAD_applications.xlsx"
+$Report | Sort-Object DisplayName | Export-Excel -Path $XlsxPath -WorksheetName Applications -TableName Applications -TableStyle Light2 -AutoSize
+cls
+Install-Module JaZ.PIM
+gcm -mod JaZ.PIM
+Get-JAzRole
+Import-Module JaZ.PIM
+Install-Module Microsoft.Graph.DeviceManagement.Enrolment
+Get-JAzRole
+gcm Az.Resources
+gcm -mod Az.Resources
+Find-Module -Name Get-AzRoleEligibilitySchedule
+Find-Module -Command Get-AzRoleEligibilitySchedule
+Update-Module Az.Resources
+Get-JAzRole
+gcm -mod JaZ.PIM
+Get-JAzRole
+Connect-AzAccount -UseDeviceAuthentication
+Get-JAzRole
+Get-JAzRole -Scope IT
+Get-JAzRole -Scope IT -All
+Get-JAzRole | Where-Object ScopeDislayName -eq IT
+Get-JAzRole | gm
+Get-JAzRole | Where-Object ScopeDislayName -eq IT
+Get-JAzRole 
+Get-JAzRole | fl *
+Get-JAzRole -Scope /providers/Microsoft.Management/managementGroups/ef5780d1-4b3f-4634-93d5-135d333ed705
+Get-JAzRole | Where-Object Name -eq b538d96d-a7cf-41c7-ba48-b5868caf9262
+Get-JAzRole | Where-Object Name -eq b33cf45a-bfa5-4a75-8d06-05f95ed25536
+Get-JAzRole | Where-Object Name -eq b33cf45a-bfa5-4a75-8d06-05f95ed2553 | Enable-JAzRole
+Update-Module JaZ.PIM
+Import-Module JaZ.PIM
+gcm -mod JaZ.PIM
+Get-JAzADRole
+Get-JAzRole
+Get-JAzADRole
+Get-JAzRole | Where-Object ScopeDislayName -eq IT
+Get-JAzRole | Where-Object ScopeType -eq managementgroup
+Get-JAzRole | Where-Object ScopeType -eq managementgroup | Where-Object ScopeDislayName -eq IT
+Get-JAzRole | Where-Object ScopeType -eq managementgroup | Where-Object ScopeDislayName -eq Production
+Get-JAzRole | gm
+Get-JAzRole | fl *
+Get-JAzRole | ft scope,scopedisplayname
+gcm -mod JaZ.PIM
+Enable-JAzADRole -RoleName 'Global Administrator' -Justification 'Daily PIM'
+Select-MgProfile 'Beta'
+Enable-JAzADRole -RoleName 'Global Administrator' -Justification 'Daily PIM'
+Enable-JAzRole
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)'
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily PIM'
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory'
+Enable-JAzADRole -RoleName 'Global Administrator' -Justification 'Daily PIM'
+Get-JAzADRole
+Get-AzContext
+Set-AzContext "Sikri Core Dev"
+Get-AzContext
+Get-JAzADRole
+Disconnect-AzAccount
+Connect-AzAccount -UseDeviceAuthentication
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory'
+Get-JAzADRole
+gmo
+Enable-JAzADRole
+Get-JAzADRole cd /
+cd /
+Get-JAzADRole 
+Get-JAzADRole -Verbose
+Connect-MgGraph -Scopes 'RoleManagement.ReadWrite.Directory'
+Get-JAzADRole -Verbose
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory'
+Get-JAzADRole -Verbose
+gcm *elig*
+gcm "Get-MgRoleManagementEntitlementManagementRoleElig*" | fl name`
+
+Find-MgGraphCommand -command Get-MgRoleManagementEntitlementManagementRoleEligibilitySchedule | Select -First 1 -ExpandProperty Permissions
+Find-MgGraphCommand -command Get-MgRoleManagementEntitlementManagementRoleEligibilityScheduleInstance | Select -First 1 -ExpandProperty Permissions
+Get-JAzADRole -Verbose
+Get-Error
+gmo
+Get-JazRole
+Update-Module JaZ.PIM
+Import-Module JaZ.PIM
+gmo
+gcm -mod JaZ.PIM
+Get-JAzRole 
+ | Enable-JAzRole
+Get-JAzRole | Where-Object Name -eq b33cf45a-bfa5-4a75-8d06-05f95ed2553 
+Get-JAzRole | Where-Object ScopeDislayName -eq IT
+Get-JAzRole | Where-Object ScopeType -eq managementgroup | Where-Object ScopeDislayName -eq Production
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory'
+Get-JAzADRole
+invoke-mggraphrequest -uri "beta/roleManagement/directory/roleEligibilitySchedules/filterByCurrentUser(on='principal')?expand=principal,roledefinition,directoryscope"
+Get-MgUser
+Connect-AzAccount -UseDeviceAuthentication
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory'
+Get-JAzADRole
+Import-Module JAz.Pim
+Get-JAzADRole
+Update-Module JaZ.PIM
+gmo
+Import-Module JaZ.PIM
+gmo
+Get-JAzRole | Where-Object ScopeDislayName -eq IT
+Get-JAzRole 
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8
+Get-JAzADRole
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory' -ContextScope Process -UseDeviceAuthentication
+Get-JAzADRole
+Enable-JAzADRole 'Global Administrator (lAPpYvVpN0KRkAEhdxReEHEHV6lnsJJAuXoPNNNruiQ-1-e)' -Justification 'Daily elevation' -Hours 8
+Disable-JAzADRole 'Global Administrator (lAPpYvVpN0KRkAEhdxReEHEHV6lnsJJAuXoPNNNruiQ-1-e)'
+Get-JAzADRole
+Enable-JAzADRole 'Global Administrator (lAPpYvVpN0KRkAEhdxReEHEHV6lnsJJAuXoPNNNruiQ-1-e)' -Justification 'Daily elevation' -Hours 8 -Wait
+az account set --subscription ca5cb6f1-6cf8-4473-95db-94e4b7757a32 # Sikri AI Dev
+az account list
+az login --use-dev
+az account set --subscription ca5cb6f1-6cf8-4473-95db-94e4b7757a32 # Sikri AI Dev
+az extension add --name ssh
+cls
+resource-group sikri-ml-dev-rg --target-resource-id /subscriptions/ca5cb6f1-6cf8-4473-95db-94e4b7757a32/resourceGroups/sikri-ml-dev-rg/providers/Microsoft.Compute/virtualMachines

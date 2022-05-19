@@ -4,6 +4,9 @@ Import-Module -Name Terminal-Icons
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
+Enable-AzPredictor -AllSession
+#Set-PSReadLineOption -PredictionViewStyle InlineView
+
 if ($IsLinux) {
 #Import-Module Microsoft.PowerShell.UnixCompleters
 #Import-UnixCompleters
