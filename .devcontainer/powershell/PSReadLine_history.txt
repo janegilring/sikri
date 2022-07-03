@@ -1,0 +1,9 @@
+gmo -list
+oh-my-posh --version
+cd ~~
+cd ~
+ls
+ls -la
+cat ./.gitconfig
+cd ~
+cat ./.gitconfig
