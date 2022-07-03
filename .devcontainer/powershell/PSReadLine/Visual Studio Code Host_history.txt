@@ -869,3 +869,26 @@ az account set --subscription ca5cb6f1-6cf8-4473-95db-94e4b7757a32 # Sikri AI De
 az extension add --name ssh
 cls
 resource-group sikri-ml-dev-rg --target-resource-id /subscriptions/ca5cb6f1-6cf8-4473-95db-94e4b7757a32/resourceGroups/sikri-ml-dev-rg/providers/Microsoft.Compute/virtualMachines
+az login --use-device
+Connect-AzAccount -UseDeviceAuthentication
+kubectl
+GetAzVmImage
+Get-AzVmImage -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer -sku 2019-datacenter-core-g2
+Get-AzVmImageSku -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer
+Get-AzVmImageSku -Location norwayeast -PublisherName MicrosoftWindowsServer -Offer WindowsServer | select Skus
+cd /sikri-data/sikri-terraform/configurations/sikri-azure-devops-pipeline-agents/dev
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform init
+az login --use-device
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+terraform init
+terraform apply
+cd /sikri-data/sikri-terraform/configurations/sikri-core-sentinel/prod
+Set-AzContext "Sikri Core"
+terraform init
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b" # Sikri Core
+terraform init
+terraform apply
+az ad signed-in-user show
+h
+az --version
