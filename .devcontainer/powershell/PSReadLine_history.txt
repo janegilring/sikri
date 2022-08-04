@@ -7,3 +7,215 @@ ls -la
 cat ./.gitconfig
 cd ~
 cat ./.gitconfig
+cd /sikri-data/sikri-terraform/configurations/sikri-core-sentinel/prod
+Get-AzManagementLock
+get-azlock
+Find-Module -Name Az
+terraform --version
+Find-Module -Name Az.Accounts
+Find-Module -Name Az.Resources
+Find-Module -Name Az.Aks
+Get-AzSqlDatabase -ResourceGroupName sikri-elements-02-dev-rg
+Get-AzSqlServer -ResourceGroupName sikri-elements-02-dev-rg
+Connect-AzAccount -UseDeviceAuthentication
+Set-AzContext "Sikri Elements Dev"
+Get-AzSqlServer -ResourceGroupName sikri-elements-02-dev-rg
+Get-AzSqlServer -ResourceGroupName sikri-elements-02-dev-rg | Get-AzSqlDatabase
+Get-AzSqlServer -ResourceGroupName sikri-elements-02-dev-rg | Get-AzSqlDatabase | Remove-AzSqlDatabase -Force
+Find-Module -Name Az.Sql
+Get-AzSqlServer -ResourceGroupName sikri-elements-02-dev-rg | Get-AzSqlDatabase
+Get-AzSqlServer -ResourceGroupName sikri-elements-02-dev-rg | Get-AzSqlDatabase | Where-Object DatabaseName -ne 'master'
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+az login --use-device-code
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+$output = terraform show -json | ConvertFrom-Json
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool*" }
+terraform --% state rm module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[/"linux/"]
+terraform --% state rm module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster["linux"]
+terraform --% state rm module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[//"linux//"]
+terraform --% state rm module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[\"linux\"]
+terraform --% state rm module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[\"win\"]
+terraform --% state rm module.sikri-terraform-elements-instance.module.kubernetes.azurerm_kubernetes_cluster_node_pool.additional_cluster[\"linux\"]
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.azurerm_storage_share*" } 
+$output = terraform show -json | ConvertFrom-Json
+terraform state list | Where-Object {$PSItem -like "module.sikri-terraform-elements-instance.azurerm_storage_share*" } 
+Get-JAzADRole
+gmo -list
+Import-Module JaZ.PIM
+Get-JAzADRole
+Connect-MgGraph -UseDeviceAuthentication
+Get-JAzADRole
+Select-MgProfile 'Beta'
+Get-JAzADRole
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8
+Disconnect-MgGraph
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory' -ContextScope Process -UseDeviceAuthentication
+Get-JAzADRole
+Enable-JAzADRole 'Global Administrator (65e16447-3c6c-42ba-adec-7bb113c64d7b)' -Justification 'Daily elevation' -Hours 8
+    $ResourceGroups = Get-AzResourceGroup |`
+    Where-Object ResourceGroupName -NotLike "MC_*" |`
+    Where-Object ResourceGroupName -NotLike "AzureBackupRG_*" |`
+    Where-Object ResourceGroupName -NE "NetworkWatcherRG" |`
+    Where-Object ResourceGroupName -NE "sikri-ml-dev-rg" |`
+    Where-Object ResourceGroupName -NE "sikri-ml-rg"
+ $ResourceGroups
+Get-AzContext
+    foreach ($ResourceGroup in $ResourceGroups) {`
+`
+        $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -AtScope`
+`
+        if (-not ($ExistingLock)) {`
+`
+            Write-Output "Lock is missing for resource group $($ResourceGroup.ResourceGroupName) - adding"`
+`
+            New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+        }`
+`
+    }
+Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -AtScope
+Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName
+Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+          $ExistingLock = Get-AzResourceLock -Scope $PSItem.ResourceId`
+`
+        if (-not ($ExistingLock)) {`
+`
+            Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+            #New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+        }`
+`
+    }
+Get-AzResourceLock -Scope "/subscriptions/f62b4b84-d593-45b4-b317-253ae47c32b4/resourceGroups/Default-EventGrid/providers/Microsoft.EventGrid/systemTopics/f62b4b84-d593-45b4-b317-253ae47c32b4-43b2f7d4-9443-4b19-8b65-fd6bfb6bca9b"
+Get-AzResourceLock -Scope "/subscriptions/f62b4b84-d593-45b4-b317-253ae47c32b4/resourceGroups/Default-EventGrid/providers/Microsoft.EventGrid/systemTopics/f62b4b84-d593-45b4-b317-253ae47c32b4-43b2f7d4-9443-4b19-8b65-fd6bfb6bca9b" -AtScope
+Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType`
+`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                #New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType`
+            $ExistingLock`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                #New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -AtScope`
+            $ExistingLock`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                #New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -AtScope -LockName ResourceLock`
+            $ExistingLock`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                #New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -AtScope -LockName ResourceLock -ErrorAction Ignore`
+            $ExistingLock`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                #New-AzResourceLock -LockName DoNotDelete -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -AtScope -LockName ResourceLock -ErrorAction Ignore`
+            $ExistingLock`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                New-AzResourceLock -LockName ResourceLock -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+        Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName | ForEach-Object {`
+`
+            $ExistingLock = Get-AzResourceLock -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -AtScope -LockName DoNotDeleteResource -ErrorAction Ignore`
+`
+            if (-not ($ExistingLock)) {`
+`
+                Write-Output "Lock is missing for resource $($PSItem.ResourceId) - adding"`
+`
+                New-AzResourceLock -LockName DoNotDeleteResource -LockLevel CanNotDelete -ResourceGroupName $ResourceGroup.ResourceGroupName -ResourceName $PSItem.ResourceName -ResourceType $PSItem.ResourceType -LockNotes "Automatically locked by Azure Functions at $(Get-Date)" -Force | Select-Object -ExpandProperty ResourceId`
+`
+            }`
+`
+        }
+Find-Module -Name Az.Network
+$PSVersionTable
+Import-Module JaZ.PIM`
+Select-MgProfile 'Beta'`
+`
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory' -ContextScope Process -UseDeviceAuthentication`
+Enable-JAzADRole 'Global Administrator (65e16447-3c6c-42ba-adec-7bb113c64d7b)' -Justification 'Daily elevation' -Hours 8`
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8`
+`
+}`
+`
+pim
+function pim {`
+`
+Import-Module JaZ.PIM`
+Select-MgProfile 'Beta'`
+`
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory' -ContextScope Process -UseDeviceAuthentication`
+Enable-JAzADRole 'Global Administrator (65e16447-3c6c-42ba-adec-7bb113c64d7b)' -Justification 'Daily elevation' -Hours 8`
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8`
+`
+}`
+`
+pim
+Enable-JAzADRole 'Global Administrator (65e16447-3c6c-42ba-adec-7bb113c64d7b)'
+Enable-JAzADRole 'Global Administrator (65e16447-3c6c-42ba-adec-7bb113c64d7b)' -Justification 'Daily elevation' -Hours 8
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8
+Enable-JAzRole 
+JAzRole
+Get-AzContext
+Connect-AzAccount -Tenant b716bd50-85d2-417b-8540-2a4d8d97f738 -UseDeviceAuthentication
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8
