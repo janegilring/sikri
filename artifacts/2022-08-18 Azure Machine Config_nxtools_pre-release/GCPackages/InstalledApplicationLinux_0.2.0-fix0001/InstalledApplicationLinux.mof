@@ -1,0 +1,35 @@
+/*
+@TargetNode='InstalledApplicationLinux'
+@GeneratedBy=GaelColas
+@GenerationDate=08/17/2022 22:50:30
+@GenerationHost=LAPTOP-EFGN97D5
+*/
+
+instance of GC_InstalledApplicationLinux as $GC_InstalledApplicationLinux1ref
+{
+Name = "installed_application_linux";
+ ModuleVersion = "0.2.0";
+ SourceInfo = "C:\\src\\MSFT\\nxtools\\source\\GCPackages\\InstalledApplicationLinux\\InstalledApplicationLinux.config.ps1::5::9::GC_InstalledApplicationLinux";
+ AttributesYmlContent = "packages: [Undefined Application]";
+ ModuleName = "nxtools";
+ ResourceID = "[GC_InstalledApplicationLinux]InstalledApplicationLinux";
+ ConfigurationName = "InstalledApplicationLinux";
+};
+instance of OMI_ConfigurationDocument
+
+                    {
+ Version="2.0.0";
+
+                        MinimumCompatibleVersion = "1.0.0";
+
+                        CompatibleVersionAdditionalProperties= {"Omi_BaseResource:ConfigurationName"};
+
+                        Author="GaelColas";
+
+                        GenerationDate="08/17/2022 22:50:30";
+
+                        GenerationHost="LAPTOP-EFGN97D5";
+
+                        Name="InstalledApplicationLinux";
+
+                    };

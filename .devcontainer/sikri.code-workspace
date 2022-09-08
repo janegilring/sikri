@@ -7,5 +7,7 @@
 			"path": "../../../sikri-data"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"powershell.cwd": "/workspaces/sikri"
+	}
 }

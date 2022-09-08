@@ -219,3 +219,307 @@ JAzRole
 Get-AzContext
 Connect-AzAccount -Tenant b716bd50-85d2-417b-8540-2a4d8d97f738 -UseDeviceAuthentication
 Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8
+terraform --version
+az version
+az upgrade
+az upgrade -y
+sudo az upgrade -y
+cl
+cls
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/ecm-jertest
+ls
+Set-AzContext "Sikri Core"
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+Get-AzSubscription
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init -backend-config="storage_account_name=sikriterraform" -backend-config="container_name=tfstate" -backend-config="key=azure_sikri_ecm_sikri-ecm-jertest-rg.terraform.tfstate"
+terraform plamn
+terraform plan
+az login --scope https://graph.microsoft.com//.default --use-device
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+terraform plan
+az login --use-device
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+terraform plan
+az logout
+az login --service-principal -u e5e66ac7-37b9-41e0-b72a-379aadd4795f -p 4zW7Q~HC~EI52dinZHcfI8KXJg4WLS7m-oSf2 --tenant 9e70be25-bfe6-42aa-951c-e36dd085196b
+az account list
+az subscription list
+az account list
+az logout
+az login --service-principal -u f6702ca9-4f7a-49c5-864e-b9ca358ddbba -p 468a4a4d-a5bf-46c8-8732-81640bd47dea --tenant b716bd50-85d2-417b-8540-2a4d8d97f738
+az account list
+az login --service-principal -u f6702ca9-4f7a-49c5-864e-b9ca358ddbba -p 468a4a4d-a5bf-46c8-8732-81640bd47dea --tenant b716bd50-85d2-417b-8540-2a4d8d97f738
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+terraform init -backend-config="storage_account_name=sikriterraform" -backend-config="container_name=tfstate" -backend-config="key=azure_sikri_ecm_sikri-ecm-jertest-rg.terraform.tfstate"
+terraform plan
+$env:ARM_CLIENT_ID="f6702ca9-4f7a-49c5-864e-b9ca358ddbba"
+$env:ARM_SUBSCRIPTION_ID="517c3913-7405-4318-a3ee-2304a123f7b2"
+$env:ARM_TENANT_ID="b716bd50-85d2-417b-8540-2a4d8d97f738"
+terraform plan
+az logout
+az login --service-principal -u d6c45638-e096-4118-af63-a7e67cc89387 -p kXZ8Q~4SveKHMPn6oP4kSwuI5dLXfBC~zGhKXbIW --tenant b716bd50-85d2-417b-8540-2a4d8d97f738
+terraform init -backend-config="storage_account_name=sikriterraform" -backend-config="container_name=tfstate" -backend-config="key=azure_sikri_ecm_sikri-ecm-jertest-rg.terraform.tfstate"
+terraform plan
+terraform plan
+function pim {`
+`
+Import-Module JaZ.PIM`
+Select-MgProfile 'Beta'`
+`
+Connect-MgGraph -Scopes 'RoleEligibilitySchedule.ReadWrite.Directory','RoleManagement.ReadWrite.Directory' -ContextScope Process -UseDeviceAuthentication`
+Enable-JAzADRole 'Global Administrator (65e16447-3c6c-42ba-adec-7bb113c64d7b)' -Justification 'Daily elevation' -Hours 8`
+`
+Connect-AzAccount -Tenant b716bd50-85d2-417b-8540-2a4d8d97f738 -UseDeviceAuthentication`
+Enable-JAzRole 'Owner -> IT (b33cf45a-bfa5-4a75-8d06-05f95ed25536)' -Justification 'Daily elevation' -Hours 8`
+`
+}
+pim
+kubectl
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+az account show
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+az account list
+az login --use-device
+az account set -s "f62b4b84-d593-45b4-b317-253ae47c32b4" # Sikri Core Dev
+cd /sikri-data/sikri-terraform/configurations/sikri-elements-shared/dev/application-gateway
+terraform init
+terraform apply
+terraform plan
+cd /sikri-data/sikri-terraform/configurations/sikri-ecm/shared
+Set-AzContext "Sikri Core"
+az account set -s "517c3913-7405-4318-a3ee-2304a123f7b2" # Sikri ECM
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikriterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform plan
+az account show
+terraform plan
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform plan
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate"
+terraform init  -backend-config "storage_account_name=sikriterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_ecm_sikri-ecm-shared-rg.terraform.tfstate" -upgrade
+terraform plan
+cls
+terraform plan
+cls
+terraform plan
+terraform apply
+terraform plan
+terraform apply
+Get-AzContext
+Get-AzContext | fl
+Remove-AzRoleAssignment -SignInName c1-admin_jer@pragmaticecm.onmicrosoft.com ``
+  -RoleDefinitionName "User Access Administrator" -Scope "/"
+pim
+Set-AzContext 8fa28fd6-fb57-4f30-97ff-ef091d6675ef
+$ResourceGroupName = 'sikri-ml-rg'`
+$GatewayName = 'sikri-ml-agw'
+$AppGw = Get-AzApplicationGateway -ResourceGroupName $ResourceGroupName -Name $GatewayName
+$AppGw.webApplicationFirewallConfiguration = $null
+Set-AzApplicationGateway -ApplicationGateway $AppGw
+$env:PSModulePath
+$env:PSModulePath = $env:PSModulePath + ":/sikri-data/sikri-operations/scripts/azure machine configuration/modules"`
+
+gcm -mod -list
+gmo -list
+Configuration InstallPowerShell7OnLinux`
+{`
+    Import-DscResource -ModuleName nxtools`
+`
+    Node localhost`
+    {`
+`
+  `
+`
+    }`
+}
+$ExecutionContext.SessionState.LanguageMode
+Configuration InstallPowerShell7OnLinux
+{`
+    Import-DscResource -ModuleName nxtools`
+`
+    Node localhost`
+    {`
+`
+  `
+    }`
+}
+Configuration InstallPowerShell7OnLinux
+{`
+    Import-DscResource -ModuleName nxtools`
+`
+    Node localhost`
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }`
+}
+mkdir /sikri-data/dsc-tmp
+cd /sikri-data/dsc-tmp
+InstallPowerShell7OnLinux
+$env:PSModulePath
+$env:PSModulePath = $env:PSModulePath + ":/sikri-data/sikri-operations/scripts/azure machine configuration/modules"
+Configuration InstallPowerShell7OnLinux
+{`
+    Import-DscResource -ModuleName nxtools`
+`
+    Node localhost`
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }`
+}
+InstallPowerShell7OnLinux
+{`
+    Import-DscResource -ModuleName nxtools`
+`
+    Node localhost`
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }`
+}
+Configuration InstallPowerShell7OnLinux {
+    Import-DscResource -ModuleName nxtools
+    Node localhost
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }
+}
+Configuration InstallPowerShell7OnLinux {
+    Import-DscResource -ModuleName nxtools
+    Node localhost
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }
+}
+$ExecutionContext.SessionState.LanguageMode
+Install-Module -Name GuestConfiguration
+Install-Module PSDesiredStateConfiguration
+Import-Module PSDesiredStateConfiguration
+gmo
+gcm -mod PSDesiredStateConfiguration
+Configuration InstallPowerShell7OnLinux {
+  Import-DscResource -ModuleName nxtools
+    Node localhost
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }
+}
+Import-Module PSDesiredStateConfiguration
+ss$env:PSModulePath = $env:PSModulePath + ":/sikri-data/sikri-operations/scripts/azure machine configuration/modules"
+Configuration InstallPowerShell7OnLinux {
+  Import-DscResource -ModuleName nxtools
+    Node localhost
+    {`
+`
+      nxPackage httpd`
+      {`
+          Name = "httpd"`
+          Ensure = "Present"`
+          PackageManager = "Yum"`
+      }`
+`
+    }
+}
+help Configuration
+Import-Module PSDesiredStateConfiguration
+Get-Subnet 10.244.16.0/20
+Get-Subnet 10.244.43.0/20
+Get-Subnet 10.244.32.0/20
+Get-Subnet 10.244.48.0/20
+Get-Subnet 10.244.64.0/20
+Get-Subnet 10.244.64.0/21
+Set-TerraformVersion -Version 1.0.5
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/staging01
+Set-AzContext "Sikri Core Dev"`
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev`
+
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-01-staging-rg.terraform.tfstate" --upgrade
+terraform validate
+cls
+terraform plan
+("elements01stagingnbukxctemp").Length
+("elements-01-stag").Length
+terraform console
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/staging01
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-01-staging-rg.terraform.tfstate" --upgrade
+terraform apply
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-01-staging-rg.terraform.tfstate" --upgrade
+terraform plan
+terraform init
+terraform init -reconfigure
+terraform plan
+$env:AZDO_PERSONAL_ACCESS_TOKEN
+Install-Module VSTeam
+Set-VSTeamAccount -Account https://dev.azure.com/elements/ -PersonalAccessToken $env:AZDO_PERSONAL_ACCESS_TOKEN
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName Projects | Where-Object name -like "*staging01*"
+Get-VSTeamServiceEndpoint -ProjectName Projects | Where-Object name -like "*staging01*" | Remove-VSTeamServiceEndpoint
+Get-VSTeamServiceEndpoint -ProjectName Projects | Where-Object name -like "*staging01*" | Remove-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName Projects 
+("elements01stagidpiwlwtemp").Length
+Get-VSTeamServiceEndpoint -ProjectName Projects 
+Remove-VSTeamServiceEndpoint -ProjectName Projects -id 1d45e1e7-f2df-4ee0-9f51-5777eb1b0619
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS' 
+Get-VSTeamServiceEndpoint -ProjectName Projects 
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS' | Where-Object name -like "*staging01*" | Remove-VSTeamServiceEndpoint -ProjectName Projects
+Remove-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS' -id 4f814584-3a6b-46e7-95cb-ffa79db7268f
+Get-VSTeamServiceEndpoint -ProjectName Projects 
+kubectl
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS'
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+kubectl
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/staging01
+Set-AzContext "Sikri Core Dev"
+Connect-AzAccount -UseDeviceAuthentication
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+$env:ARM_ACCESS_KEY = (Get-AzStorageAccountKey -Name sikridevterraform -ResourceGroupName sikri-terraform-backend-rg)[0].Value
+terraform init
+terraform plan
+terraform state list
+terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_backend_projects

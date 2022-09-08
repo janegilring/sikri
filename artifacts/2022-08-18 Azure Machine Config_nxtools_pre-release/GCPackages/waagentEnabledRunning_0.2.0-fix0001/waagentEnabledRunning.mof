@@ -1,0 +1,36 @@
+/*
+@TargetNode='waagentEnabledRunning'
+@GeneratedBy=GaelColas
+@GenerationDate=08/17/2022 22:50:34
+@GenerationHost=LAPTOP-EFGN97D5
+*/
+
+instance of nxService as $nxService1ref
+{
+State = "running";
+ Name = "waagent.service";
+ ModuleVersion = "0.2.0";
+ Enabled = True;
+ SourceInfo = "C:\\src\\MSFT\\nxtools\\source\\GCPackages\\waagentEnabledRunning\\waagentEnabledRunning.config.ps1::6::9::nxService";
+ ModuleName = "nxtools";
+ ResourceID = "[nxService]waagentConfig";
+ ConfigurationName = "waagentEnabledRunning";
+};
+instance of OMI_ConfigurationDocument
+
+                    {
+ Version="2.0.0";
+
+                        MinimumCompatibleVersion = "1.0.0";
+
+                        CompatibleVersionAdditionalProperties= {"Omi_BaseResource:ConfigurationName"};
+
+                        Author="GaelColas";
+
+                        GenerationDate="08/17/2022 22:50:34";
+
+                        GenerationHost="LAPTOP-EFGN97D5";
+
+                        Name="waagentEnabledRunning";
+
+                    };
