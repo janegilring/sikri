@@ -523,3 +523,220 @@ terraform init
 terraform plan
 terraform state list
 terraform taint module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_backend_projects
+Find-Module Az.Aks
+Get-AzSubscription
+Install-Module Az.PostgreSql
+Get-AzContext
+Set-AzContext "Sikri Elements"
+Get-AzPostgreSqlFirewallRule -Name elements-01-test-pg -ResourceGroupName sikri-elements-01-test-rg
+Get-AzPostgreSqlFirewallRule -Name elements-01-test-pg -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg
+Get-AzPostgreSqlFirewallRule -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg
+gmo
+Get-AzPostgreSqlConfiguration -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg
+Get-AzPostgreSqlServern -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg
+Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg
+Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg | fl
+(Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg).PublicNetworkAccess=$false
+$pgserver = Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg
+$pgserver.PublicNetworkAccess=$false
+Update-AzPostgreSqlServer -InputObject $pgserver
+gmo
+Get-AzContext | fl
+$pgserver.PublicNetworkAccess=$true
+Update-AzPostgreSqlServer -InputObject $pgserver
+Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg | fl
+Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg | gm
+$pgserver.PublicNetworkAccess="Disabled"
+Update-AzPostgreSqlServer -InputObject $pgserver
+Get-AzPostgreSqlServer -ResourceGroupName sikri-elements-01-test-rg -ServerName elements-01-test-pg | fl Public*
+Update-AzPostgreSqlServer -InputObject $pgserver -PublicNetworkAccess 'Disabled'
+gmo
+Find-Module -Name Az.Aks
+Find-Module -Name Az.Network
+Save-Module -Name Az.Aks -Path /sikri-data/sikri-operations/functions/dev/elements-func/Modules
+$PSVersionTable
+$PSVersionTable.PSVersion
+$PSVersionTable.PSVersion.ToString()
+sfsfd
+$Error
+Get-Error
+Get-Module Az*
+az account set --subscription cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e
+az aks get-credentials --resource-group sikri-elements-02-dev-rg --name elements-02-dev-k8s
+ls
+cd /home/vscode
+ls
+kubectl
+curl -LO https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl
+ls
+chmod ./kubectl
+chmod 774 ./kubectl
+./kubectl version
+az aks install-cli
+az aks install-cli --install-location /home/vscode
+az aks install-cli --install-location /home/vscode/kubectl
+az aks install-cli --install-location /home/vscode/kubectl --kubelogin-install-location /home/vscode/kubelogin
+./kubectl version
+dir $env:PATH
+mv ./kubectl /home/vscode/.tftools
+mv ./kubelogin /home/vscode/.tftools
+kubectl
+dir env:
+dir env:PATH
+dir env:PATH | select -exp Value
+get-command kubectl
+ls /home/vscode/.tftools
+dir /home/vscode/.tftools
+ls
+mkdir /home/vscode/.tftools
+rm /home/vscode/.tftools
+mkdir /home/vscode/.tftools
+cd /home/vscode/.tftools
+az aks install-cli --install-location /home/vscode/.tftools/kubectl --kubelogin-install-location /home/vscode/.tftools/kubelogin
+get-command kubectl
+kubectl version
+kubectl get nodes
+kubectl get svc
+kubectl get service-account
+kubectl get serviceaccount
+kubectl get sa
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02/main.tf
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+ls
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform plan
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform plan
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform plan
+ls
+ls ./terraform
+ls ./.terraform
+ls ./.terraform/providers/
+terraform destroy
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform destroy
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform validate
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Set-VSTeamAccount -Account https://dev.azure.com/elements/ -PersonalAccessToken $env:AZDO_PERSONAL_ACCESS_TOKEN
+Get-VSTeamServiceEndpoint -ProjectName Projects
+az aks get-credentials --resource-group sikri-elements-02-dev-rg --name elements-02-dev-k8s
+kubectl get nodes
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform apply
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_monitoring_projects
+kubectl get sa
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_monitoring_projects
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_monitoring_projects
+Set-VSTeamAccount -Account https://dev.azure.com/elements/ -PersonalAccessToken $env:AZDO_PERSONAL_ACCESS_TOKEN
+Get-VSTeamServiceEndpoint -ProjectName Projects
+terraform validate
+terraform plan
+Remove-Item .\.terraform -Force -Recurse
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform plan
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_default_projects
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS'
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS' | Where-Object name -like "*dev02*" | Remove-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS' | Where-Object name -like "*dev02*" | Remove-VSTeamServiceEndpoint -ProjectName "Elements Cloud AKS"
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS'
+terraform validate
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS' | Where-Object name -like "*dev02*" | Remove-VSTeamServiceEndpoint -ProjectName "Elements Cloud AKS"
+terraform plan
+terraform state list 
+Set-AzVMExtension -Publisher 'Microsoft.GuestConfiguration' -Type 'ConfigurationforLinux' -Name 'AzurePolicyforLinux' -TypeHandlerVersion 1.26.38 -ResourceGroupName 'sikri-elements-elk-dev-rg' -Location 'norwayeast' -VMName 'dev-data-0' -EnableAutomaticUpgrade $true
+Set-AzContext "Sikri Elements Dev"
+Set-AzVMExtension -Publisher 'Microsoft.GuestConfiguration' -Type 'ConfigurationforLinux' -Name 'AzurePolicyforLinux' -TypeHandlerVersion 1.26.38 -ResourceGroupName 'sikri-elements-elk-dev-rg' -Location 'norwayeast' -VMName 'dev-data-0' -EnableAutomaticUpgrade $true
+Set-AzVMExtension -Publisher 'Microsoft.GuestConfiguration' -Type 'ConfigurationforLinux' -Name 'AzurePolicyforLinux' -TypeHandlerVersion 1.36.48 -ResourceGroupName 'sikri-elements-elk-dev-rg' -Location 'norwayeast' -VMName 'dev-data-0' -EnableAutomaticUpgrade $true
+Set-AzVMExtension -Publisher 'Microsoft.GuestConfiguration' -Type 'ConfigurationforLinux' -Name 'AzurePolicyforLinux' -TypeHandlerVersion 1.26.38 -ResourceGroupName 'sikri-elements-elk-dev-rg' -Location 'norwayeast' -VMName 'dev-data-0' -EnableAutomaticUpgrade $true
+Get-Module
+Get-Module | Select-Object Name,Version
+Get-Module | Select-Object Name,Version,*Path*
+[System.AppDomain]::CurrentDomain.GetAssemblies() | Where-Object Location | Sort-Object -Property FullName | Select-Object -Property FullName, Location
+cls
+Get-AzVm
+$VM = Get-AzVm | Select-Object -First 1
+Start-AzVM -Id $VM.Id
+$VM
+$VM = Get-AzVm | Select-Object -First 1
+$VM
+$VM.ProvisioningState
+$VM | fl *
+$VM = Get-AzVm -Status | Select-Object -First 1
+$VM | fl *
+$VM.PowerState
+$VM.PowerState | gm
+$VM.PowerState
+$VM.PowerState -eq 'VM running'
+Get-Command -Module Az.Aks | select name
+az account set -s "5b10d823-9373-4a37-9bf5-8246ee03d36b"
+az functionapp update --name sikri-it-automation-func --resource-group sikri-infrastructure-rg --plan sikri-it-automation-func-sp-premium
+az functionapp update
+az functionapp update --help
+az account show
+az functionapp update --name sikri-it-automation-func --resource-group sikri-infrastructure-rg --plan sikri-it-automation-func-sp-premium
+az functionapp plan create --name sikri-it-automation-func-sp-premium --sku EP1 --resource-group sikri-infrastructure-rg --location norwayeast
+az functionapp update --name sikri-it-automation-func --resource-group sikri-infrastructure-rg --plan sikri-it-automation-func-sp-premium
+az account set -s "32927346-9e0b-4d03-ab1a-7b6636e377dd"
+az aks update --name elements-01-k8s --resource-group sikri-elements-01-rg --api-server-authorized-ip-ranges "51.120.4.165/32,51.107.209.108/32,51.120.1.22/32,81.166.195.30/32,195.1.83.138/32,178.74.43.151/32,82.134.44.146/32,82.134.65.102/32,92.220.73.159/32,51.120.5.197/32,188.113.112.67/32,51.13.160.2/32,193.69.254.102/32,88.90.77.14/32,77.16.62.201/32,84.210.178.81/32,89.8.131.192/32,178.232.143.29/32,46.15.230.146/32,51.13.110.254/32,178.232.190.115/32"
+az aks update --name elements-01-k8s --resource-group sikri-elements-01-rg 
+az aks nodepool
+az aks nodepool --name elements-01-k8s --resource-group sikri-elements-01-rg
+az aks nodepool --name elements-01-k8s
+az aks nodepool show --cluster-name elements-01-k8s --name win --resource-group sikri-elements-01-rg
+az aks nodepool show --cluster-name elements-01-k8s --name linux --resource-group sikri-elements-01-rg
+14*43
+25*38
+950+602
+az aks nodepool show --cluster-name elements-01-k8s --name sys --resource-group sikri-elements-01-rg
+950+602+80
+Get-Subnet 10.128.16.0/21
+2046-1632
+az account set --subscription cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e
+az aks get-credentials --resource-group sikri-elements-02-dev-rg --name elements-02-dev-k8s
+kubectl get svc
+kubectl --% config view --minify -o jsonpath={.clusters[0].cluster.server}
+kubectl --% get serviceAccounts
+cd /sikri-data/sikri-terraform/configurations/sikri-elements/dev02
+terraform init
+Set-AzContext "Sikri Core Dev"
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+terraform init  -backend-config "storage_account_name=sikridevterraform" -backend-config "container_name=tfstate" -backend-config "key=azure_sikri_elements_dev_sikri-elements-02-dev-rg.terraform.tfstate" --upgrade
+terraform validate
+terraform plan
+az login --use-device
+az account set -s "cfa26b5b-ac9f-432c-bd09-7bb6b9cd6e3e" # Sikri Elements Dev
+terraform plan
+terraform state list
+terraform apply --target=azuredevops_serviceendpoint_kubernetes.aks_default_elements_cloud_aks
+terraform plan
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_default_elements_cloud_aks
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_aks_default_projects
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_default_projects
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_backend_projects
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_monitoring_projects
+terraform apply --target=module.sikri-terraform-elements-instance.azuredevops_serviceendpoint_kubernetes.aks_utility_projects
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Set-VSTeamAccount -Account https://dev.azure.com/elements/ -PersonalAccessToken $env:AZDO_PERSONAL_ACCESS_TOKEN
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName 'Elements Cloud AKS'
+Get-VSTeamServiceEndpoint -ProjectName Projects
+Get-VSTeamServiceEndpoint -ProjectName Projects -id azuredevops-default-dev02
+Get-VSTeamServiceEndpoint -ProjectName Projects | where name -eq "azuredevops-default-dev02"
+Get-VSTeamServiceEndpoint -ProjectName Projects | where name -eq "azuredevops-default-dev02" | fl *
+Get-VSTeamServiceEndpoint -ProjectName Projects -id azuredevops-default-dev02
+Get-VSTeamServiceEndpoint -ProjectName Projects
+kubectl get serviceaccount
+kubectl get serviceaccount -o yaml
